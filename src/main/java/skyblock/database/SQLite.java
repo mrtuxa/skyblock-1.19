@@ -1,5 +1,9 @@
 package skyblock.database;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
+import skyblock.utils.discord.log.core.Bot;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
@@ -61,4 +65,37 @@ public class SQLite {
         return null;
     }
 
+    public static void addGuild(String guildId) {
+        try {
+            String sql = "INSERT INTO guilds (guild_id) VALUES ('" + guildId + "')";
+            statement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static boolean checkGuild(String guildId) {
+        String sql = "SELECT * FROM guilds WHERE guild_id = '" + guildId + "'";
+
+        try (ResultSet rs = statement.executeQuery(sql)) {
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void deleteGuild(String guildId) {
+        String sql = "DELETE FROM guilds WHERE guild_id = '" + guildId + "'";
+        try {
+            statement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

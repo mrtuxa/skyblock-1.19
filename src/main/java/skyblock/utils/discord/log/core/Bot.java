@@ -51,7 +51,7 @@ public class Bot {
         builder.setMemberCachePolicy(MemberCachePolicy.ALL);
         builder.enableCache(CacheFlag.VOICE_STATE);
         builder.enableIntents(intents);
-        builder.setActivity(Activity.watching("Diamonds"));
+        builder.setActivity(Activity.playing("Minecraft"));
 
         new JoinListener();
 

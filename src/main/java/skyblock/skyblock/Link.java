@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import skyblock.utils.discord.log.system.LinkAccount;
 
 import java.security.SecureRandom;
 
@@ -29,6 +28,13 @@ public class Link extends ListenerAdapter implements CommandExecutor {
             if (Skyblock.hashMap.containsValue(player)) {
                 player.sendMessage("§cYou are already linked to an account.");
                 return true;
+            } else {
+                // generate auth code
+                String authCode = generateAuthCode();
+                // add player to hashmap
+                Skyblock.hashMap.put(String.valueOf(player.getUniqueId()), player.getDisplayName());
+                // send auth code to player
+                player.sendMessage("§aPlease enter this code in the Discord client: " + authCode);;
             }
 
 
